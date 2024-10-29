@@ -31,12 +31,12 @@ let rec insertNode value count tree =
     | BNode(Node(v, c), left, right) -> BNode(Node(v, c), insertNode value count left, right)
 
 
-let rec mergeTrees t1 t2 =
+let rec merge t1 t2 =
     match t1 with
     | Empty -> t2
     | BNode(Node(value, count), left, right) ->
-        let mergedRight = mergeTrees right t2
-        mergeTrees left (insertNode value count mergedRight)
+        let mergedRight = merge right t2
+        merge left (insertNode value count mergedRight)
 
 
 
@@ -45,7 +45,7 @@ let rec remove x tree =
     | Empty -> Empty
     | BNode(Node(value, count), left, right) when x < value -> BNode(Node(value, count), remove x left, right)
     | BNode(Node(value, count), left, right) when x > value -> BNode(Node(value, count), left, remove x right)
-    | BNode(Node(value, 1), left, right) -> mergeTrees left right
+    | BNode(Node(value, 1), left, right) -> merge left right
     | BNode(Node(value, count), left, right) -> BNode(Node(value, count - 1), left, right)
 
 
@@ -100,7 +100,7 @@ let rec filter predicate tree =
         if predicate value then
             BNode(Node(value, count), filteredLeft, filteredRight)
         else
-            mergeTrees filteredLeft filteredRight
+            merge filteredLeft filteredRight
 
 
 let rec countElements (tree: BTreeMultiset<'T>) : int =
@@ -109,7 +109,7 @@ let rec countElements (tree: BTreeMultiset<'T>) : int =
     | BNode(Node(_, count), left, right) -> count + countElements left + countElements right
 
 
-let compareTrees (tree1: BTreeMultiset<'T>) (tree2: BTreeMultiset<'T>) : bool =
+let compare (tree1: BTreeMultiset<'T>) (tree2: BTreeMultiset<'T>) : bool =
     let count1 = countElements tree1
     let count2 = countElements tree2
 
