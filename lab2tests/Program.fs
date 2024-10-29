@@ -1,1 +1,3 @@
-module Program = let [<EntryPoint>] main _ = 0
+[<EntryPoint>]
+let main (argv: string array) =
+    0

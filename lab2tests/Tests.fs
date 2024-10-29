@@ -27,7 +27,6 @@ let ``Remove should remove element if count is 1`` () =
     let updatedBag = remove 3 bag |> remove 3
     Assert.Equal(0, countElement 3 updatedBag)
 
-
 [<Fact>]
 let ``Remove root element should restructure bag correctly`` () =
     let updatedBag = remove 5 bag
@@ -71,13 +70,13 @@ let ``Removing all occurrences of an element`` () =
     Assert.Equal(1, countElement 8 updatedBag)
 
 
-
 let bag2 = Empty |> insert 5 |> insert 5 |> insert 3 |> insert 7 |> insert 6 |> insert 8
 
 [<Fact>]
 let ``Fold should sum all elements correctly`` () =
     let sum = foldLeft (+) 0 bag2
     Assert.Equal((10 + 3 + 7 + 6 + 8), sum)
+
 
 [<Fact>]
 let ``Filter should return bag with elements greater than 4`` () =
@@ -100,7 +99,6 @@ let ``Compare bags should return false for different counts`` () =
 
     let result = compare bag1 bag2
     Assert.False(result)
-
 
 [<Fact>]
 let ``Compare bags should return false for different bags`` () =
