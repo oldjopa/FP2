@@ -101,3 +101,27 @@ let rec filter predicate tree =
             BNode(Node(value, count), filteredLeft, filteredRight)
         else
             mergeTrees filteredLeft filteredRight
+
+
+let rec countElements (tree: BTreeMultiset<'T>) : int =
+    match tree with
+    | Empty -> 0
+    | BNode(Node(_, count), left, right) -> count + countElements left + countElements right
+
+
+let compareTrees (tree1: BTreeMultiset<'T>) (tree2: BTreeMultiset<'T>) : bool =
+    let count1 = countElements tree1
+    let count2 = countElements tree2
+
+    if count1 <> count2 then
+        false
+    else
+        let rec checkElements tree1 tree2 =
+            match tree1 with
+            | Empty -> true
+            | BNode(Node(value, count), left, right) ->
+                countElement value tree2 = count
+                && checkElements left tree2
+                && checkElements right tree2
+
+        checkElements tree1 tree2
