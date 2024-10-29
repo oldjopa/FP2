@@ -70,7 +70,8 @@ let ``Removing all occurrences of an element`` () =
     Assert.Equal(1, countElement 8 updatedBag)
 
 
-let bag2 = Empty |> insert 5 |> insert 5 |> insert 3 |> insert 7 |> insert 6 |> insert 8
+let bag2 =
+    Empty |> insert 5 |> insert 5 |> insert 3 |> insert 7 |> insert 6 |> insert 8
 
 [<Fact>]
 let ``Fold should sum all elements correctly`` () =
@@ -87,30 +88,21 @@ let ``Filter should return bag with elements greater than 4`` () =
 
 [<Fact>]
 let ``Compare bags should return false for different counts`` () =
-    let bag1 = 
-        BNode(Node(5, 2), 
-            BNode(Node(3, 1), Empty, Empty), 
-            BNode(Node(7, 1), Empty, Empty))
-    
-    let bag2 = 
-        BNode(Node(5, 2), 
-            BNode(Node(3, 1), Empty, Empty), 
-            BNode(Node(7, 2), Empty, Empty))
+    let bag1 =
+        BNode(Node(5, 2), BNode(Node(3, 1), Empty, Empty), BNode(Node(7, 1), Empty, Empty))
+
+    let bag2 =
+        BNode(Node(5, 2), BNode(Node(3, 1), Empty, Empty), BNode(Node(7, 2), Empty, Empty))
 
     let result = compare bag1 bag2
     Assert.False(result)
 
 [<Fact>]
 let ``Compare bags should return false for different bags`` () =
-    let bag1 = 
-        BNode(Node(5, 2), 
-            BNode(Node(3, 1), Empty, Empty), 
-            BNode(Node(7, 1), Empty, Empty))
-    
-    let bag2 = 
-        BNode(Node(5, 2), 
-            Empty, 
-            BNode(Node(7, 1), Empty, Empty))
+    let bag1 =
+        BNode(Node(5, 2), BNode(Node(3, 1), Empty, Empty), BNode(Node(7, 1), Empty, Empty))
+
+    let bag2 = BNode(Node(5, 2), Empty, BNode(Node(7, 1), Empty, Empty))
 
     let result = compare bag1 bag2
     Assert.False(result)
@@ -125,11 +117,9 @@ let ``Compare bags should return true for two empty bags`` () =
 
 [<Fact>]
 let ``Compare bags should return false for one empty bag`` () =
-    let bag1 = 
-        BNode(Node(5, 2), 
-            BNode(Node(3, 1), Empty, Empty), 
-            BNode(Node(7, 1), Empty, Empty))
-    
+    let bag1 =
+        BNode(Node(5, 2), BNode(Node(3, 1), Empty, Empty), BNode(Node(7, 1), Empty, Empty))
+
     let bag2 = Empty
 
     let result = compare bag1 bag2

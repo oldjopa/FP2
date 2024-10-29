@@ -1,4 +1,5 @@
 module PropertyTests
+
 open Xunit
 open FsCheck
 open FsCheck.Xunit
@@ -7,7 +8,10 @@ open bt_bag
 
 type ArrayArbitrary() =
     static member Arb =
-        Arb.fromGen (Gen.choose (50, 100) |>  Gen.map (fun length -> Gen.arrayOfLength length (Gen.choose (-50, 50))))
+        Arb.fromGen (
+            Gen.choose (50, 100)
+            |> Gen.map (fun length -> Gen.arrayOfLength length (Gen.choose (-50, 50)))
+        )
 
 
 [<Property(Arbitrary = [| typeof<ArrayArbitrary> |])>]
