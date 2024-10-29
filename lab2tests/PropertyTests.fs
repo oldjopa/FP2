@@ -22,11 +22,12 @@ let prop_emptyMerge (n: int[]) =
 
 
 [<Property(Arbitrary = [| typeof<ArrayArbitrary> |])>]
-let prop_associativity (n1: int[]) (n2: int[]) =
+let prop_associativity (n1: int[]) (n2: int[]) (n3: int[]) =
     let bag1 = Array.fold (fun acc x -> insert x acc) Empty n1
     let bag2 = Array.fold (fun acc x -> insert x acc) Empty n2
-    let mergedBag = merge bag1 bag2
-    let mergedBag2 = merge bag2 bag1
+    let bag3 = Array.fold (fun acc x -> insert x acc) Empty n3
+    let mergedBag = merge bag1 (merge bag2 bag3)
+    let mergedBag2 = merge (merge bag1 bag2) bag3
     compare mergedBag mergedBag2
 
 
