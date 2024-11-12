@@ -14,7 +14,7 @@ type ArrayArbitrary() =
         )
 
 type ArbitraryBTreeMultiset<'T when 'T : comparison>() =
-    static member BTree() =
+    static member BTree =
         Arb.fromGen <| 
             gen {
                 let! size = Gen.choose (10, 50)
@@ -31,9 +31,6 @@ let prop_emptyMerge (bag: BTreeMultiset<int>) =
 
 [<Property(Arbitrary = [| typeof<ArbitraryBTreeMultiset<int>> |])>]
 let prop_associativity (bag1: BTreeMultiset<int>) (bag2: BTreeMultiset<int>) (bag3: BTreeMultiset<int>) =
-    // let bag1 = Array.fold (fun acc x -> insert x acc) Empty n1
-    // let bag2 = Array.fold (fun acc x -> insert x acc) Empty n2
-    // let bag3 = Array.fold (fun acc x -> insert x acc) Empty n3
     let mergedBag = merge bag1 (merge bag2 bag3)
     let mergedBag2 = merge (merge bag1 bag2) bag3
     compare mergedBag mergedBag2
